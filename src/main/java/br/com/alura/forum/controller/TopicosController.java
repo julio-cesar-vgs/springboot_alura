@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alura.forum.controller.dto.TopicoDto;
 import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.modelo.Topico;
+import br.com.alura.forum.repository.CursoRepository;
 import br.com.alura.forum.repository.TopicoRepository;
 
 @RestController
@@ -20,6 +21,7 @@ public class TopicosController {
 
 	@Autowired
 	private TopicoRepository topicoRepository;
+	private CursoRepository cursoRepository;
 
 	@GetMapping
 	public List<TopicoDto> lista(String nomeCurso) {
@@ -35,7 +37,7 @@ public class TopicosController {
 
 	@PostMapping
 	public void cadastrar(@RequestBody TopicoForm form) {
-		Topico topico = form.converter();
+		Topico topico = form.converter(cursoRepository);
 		topicoRepository.save(topico);
 	}
 }
